@@ -37,16 +37,10 @@ const isCollide = (rect1, rect2) => {
     );
 };
 
-const clean = (cleanMonster, cleanBullet) => {
-    if (cleanMonster) {
+const cleanMonster = () => {
+    console.log(Element.monster);
         Element.monster.remove();
         Element.monster = null;
-    }
-
-    if (cleanBullet) {
-        Element.bullet.remove();
-        bullet = null;
-    }
 };
 
 const move = (elementToMove, rectToMove, rectDest, speed) => {
@@ -94,14 +88,14 @@ const moveAll = () => {
     // Vérifie si collision sinon on continue le déplacement
     if (Element.monster && isCollide(Rect.monster, Rect.destination)) {
         console.log('Life - 1');
-        clean(true, false);
+        cleanMonster();
     } else if (Element.bullets.length) {
         Element.bullets.forEach((bullet) => {
             if (isCollide(getBoundingClientRect(bullet), Rect.monster)) {
                 monsterLife -= bulletDamages;
                 if (monsterLife <= 0) {
                     console.log('Monster destroyed');
-                    clean(true, false);
+                    cleanMonster();
                     cancelAnimationFrame(animFrameId);
                 }
                 bullet.remove();
